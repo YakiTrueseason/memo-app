@@ -29,6 +29,7 @@ function Todo() {
     return (
         <div className="App">
             <TodoList todos={todos} toggleTodo={toggleTodo} />
+            <h1>やるべきこと</h1>
             <input type='text' className='inputText' ref={todoNameRef} />
             <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
             <button className='Button' onClick={handleClear}>完了したタスクの削除</button>

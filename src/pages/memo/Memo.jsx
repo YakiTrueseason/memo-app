@@ -13,21 +13,16 @@ function Memo() {
             // 下の画像はメモと入力してから変換
             text: "新規ノート📝"
         }
-        // console.log(newNote);
         setNotes([...notes, newNote]);
         setSelectedNote(newNote);
-        // console.log(selectedNote);
         setEditedText(newNote.text);
     };
     const handleSelect = (note) => {
-        // console.log(note);
         setSelectedNote(note);
         setEditedText(note.text);
     }
     const handleDelete = (noteId) => {
-        // console.log(noteId);
         const filterNote = notes.filter((note) => note.id !== noteId);
-        // console.log(filterNote);
         setNotes(filterNote);
 
         if (filterNote.length > 0) {
@@ -38,7 +33,6 @@ function Memo() {
         }
     }
     const handleChange = (e) => {
-        // console.log(e.target.value);
         setEditedText(e.target.value);
     }
     const handleSave = () => {
@@ -55,6 +49,7 @@ function Memo() {
         <div className="app-container">
             {/* sidebar */}
             <div className='sidebar'>
+                <h1>メモ</h1>
                 <button id='create' onClick={handleNoteAdd}>ノート追加</button>
                 <ul>
                     {notes.map((note) => (

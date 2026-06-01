@@ -13,6 +13,9 @@ function Navbar() {
             <Link to="/todo">
                 <button>Todo</button>
             </Link>
+            <Link to="/calendar">
+                <button>Calendar</button>
+            </Link>
         </nav>
     )
 }
