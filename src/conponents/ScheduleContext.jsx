@@ -20,6 +20,8 @@ export function ScheduleProvider({children}){
 
     const[schedules,setSchedules] = useState([]);
 
+    const[todos,setTodos] = useState([]);
+
     useEffect(()=>{
         localStorage.setItem(
             "selectedDate",
@@ -31,8 +33,10 @@ return (
         value={{
             selectedDate,
             setSelectedDate,
+            todos,
+            setTodos,
             schedules,
-            setSchedules
+            setSchedules,
         }}
         >
             {children}
