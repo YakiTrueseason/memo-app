@@ -1,0 +1,11 @@
+.calendar-input{
+    font-size: 24px;
+    padding: 10px;
+    text-align: center;
+    width: 300px;
+}
+.calendar-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}

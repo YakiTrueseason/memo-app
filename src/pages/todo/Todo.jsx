@@ -47,6 +47,10 @@ function Todo() {
     return (
         <div className="App">
             <h3>選択中の日付：{selectedDate}</h3>
+            <h1>やるべきこと</h1><br />
+            <input type='text' className='inputText' ref={todoNameRef} />
+            <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
+            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
             <TodoList todos={
                 todos.filter(
                     (todo)=>
@@ -55,10 +59,6 @@ function Todo() {
                 }
                 toggleTodo={toggleTodo}
             />
-            <h1>やるべきこと</h1>
-            <input type='text' className='inputText' ref={todoNameRef} />
-            <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
-            <button className='Button' onClick={handleClear}>完了したタスクの削除</button>
             <div>
                 残りのタスク:{todos.filter((todo) =>
                     todo.date === selectedDate &&
