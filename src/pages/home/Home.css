@@ -7,3 +7,32 @@ h2{
 ul li{
     text-align: center;
 }
+
+.dashboard-summary{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+/* タスク一覧 */
+.card{
+    width: 150px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+/* 期限切れ */
+.expired-list{
+    /* background: red; */
+    padding: 15px;
+    border-radius: 10px;
+}
+.expired-list li{
+    color: black;
+    margin: 8px 0;
+    cursor: pointer;
+}
+.expired-list li:hover{
+    text-decoration: underline;
+}
