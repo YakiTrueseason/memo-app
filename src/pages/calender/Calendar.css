@@ -27,7 +27,7 @@
 }
 /* 今日の日付 */
 .react-calendar__tile--now{
-    background-color: red;
+    background-color: blue;
 }
 /* 選択中の日付 */
 .react-calendar__tile--active{
@@ -53,6 +53,11 @@
     background: #00ffc8 !important;
     color: blueviolet;
 }
+/* 期限切れ表示 */
+.has-expired{
+    background: red !important;
+    color: black;
+}
 /* 凡例 */
 .calendar-legend{
     display: flex;
@@ -61,7 +66,8 @@
 }
 .legend-todo,
 .legend-memo,
-.legend-both{
+.legend-both,
+.legend-expired{
     padding: 4px 12px;
     border-radius: 6px;
 }
@@ -76,6 +82,10 @@
 .legend-both{
     background: #00ffc8;
     color: blueviolet;
+}
+.legend-expired{
+    background: red;
+    color: black;
 }
 /* カレンダーのマスに要素を追加 */
 .tile-info{
