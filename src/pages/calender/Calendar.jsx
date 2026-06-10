@@ -11,24 +11,35 @@ function Calendar() {
     const notes = JSON.parse(localStorage.getItem("notes"))||[];
 
     const handleDateChange = (value)=>{
-        const dateString =`${value.getFullYear()}-
-        ${String(value.getMonth()+1).padStart(2,"0")}-
-        ${String(value.getDate()).padStart(2,"0")}`;
+        const dateString =`${value.getFullYear()}-${String(
+            value.getMonth()+1
+        ).padStart(2,"0")}-${String(
+            value.getDate()
+        ).padStart(2,"0")}`;
         setSelectedDate(dateString);
     }
-
-    
 return (
     <>
-            <h1>カレンダー</h1>        
-    <div className='calendar-container'> 
+        <h1>カレンダー</h1>        
+
         <h2>選択日：{selectedDate}</h2><br />
+
+        {/* 凡例 */}
+        <div className='calendar-legend'>
+        <span className='legend-todo'>Todo</span>
+        <span className='legend-memo'>Memo</span>
+        <span className='legend-both'>両方</span>
+        </div>
+
+        <div className='calendar-container'> 
         {/* 日付選択 */}
         <ReactCalendar 
         value={new Date(selectedDate)}
         onChange={handleDateChange}
+
         tileClassName={({date,view}) =>{
-            if(view === "month"){
+            if(view !== "month")return null;
+
                 //タイムゾーン修正
                 const dateString = `${date.getFullYear()}-${
                     String(date.getMonth()+1).padStart(2,"0")
@@ -51,9 +62,36 @@ return (
                 if(hasMemo){
                     return "has-memo";
                 }
-            }
-            return null;
+                return null;
         }}
+
+        tileContent={({date,view})=>{
+            if(view !== "month"){
+                return null;
+            }
+                const dateString = `${date.getFullYear()}-${String(
+                    date.getMonth()+1
+                ).padStart(2,"0")}-${String(
+                    date.getDate()
+                ).padStart(2,"0")}`;
+
+                const todoCount = todos.filter(
+                    todo => todo.date === dateString).length;
+
+                const memoCount = notes.filter(
+                    note=>note.date === dateString).length;
+
+                return(
+                    <div className='tile-info'>
+                        {todoCount > 0 &&(
+                    <div>✓{todoCount}</div>
+                    )}
+                        {memoCount > 0 &&(
+                    <div>📝{memoCount}</div>
+                    )}
+                    </div>
+                );
+                    }}
         />
         </div>
         </>

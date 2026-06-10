@@ -39,7 +39,7 @@
     background-color: green;
 }
 /* todoのある日付に色を付ける */
-.has-todo{
+.react-calendar__tile.has-todo{
     background: #00ffc8 !important;
     color: burlywood;
 }
@@ -52,4 +52,34 @@
 .has-both{
     background: #00ffc8 !important;
     color: blueviolet;
+}
+/* 凡例 */
+.calendar-legend{
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.legend-todo,
+.legend-memo,
+.legend-both{
+    padding: 4px 12px;
+    border-radius: 6px;
+}
+.legend-todo{
+    background: #00ffc8;
+    color: burlywood;
+}
+.legend-memo{
+    background: #00ffc8;
+    color: black;
+}
+.legend-both{
+    background: #00ffc8;
+    color: blueviolet;
+}
+/* カレンダーのマスに要素を追加 */
+.tile-info{
+    font-size: 10px;
+    text-align: center;
+    margin-top: 4px;
 }
