@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* 通常 */
+.app{
+  background: white;
+  color: black;
+  min-height: 100vh;
+  --card-bg:white;
+}
+/* ダークモード */
+.dark{
+  background: #1e1e1e;
+  color: aqua;
+  --caed-bg:#333;
+}

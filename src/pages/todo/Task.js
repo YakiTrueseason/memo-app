@@ -15,7 +15,12 @@ function Task({ todo, toggleTodo,handleEditTodo }) {
                 checked={todo.completed} readOnly 
                 onChange={handleTodoClick} />
             </label>
-            {todo.name}
+    {/* やるべきこと */}
+            <span>
+                [{todo.tag}]
+                {todo.name}
+                ({todo.date})
+            </span>
     {/* 編集 */}
             <button onClick={()=>handleEditTodo(todo.id)}>編集</button>
     {/* 期限切れ */}
