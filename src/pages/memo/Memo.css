@@ -17,7 +17,7 @@ body {
 
 /* サイドバーのスタイル */
 .sidebar {
-  background-color: #f4f4f4;
+  background-color: aliceblue;
   padding: 20px;
   height: 100vh;
   overflow-y: auto;

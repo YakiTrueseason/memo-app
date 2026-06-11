@@ -21,6 +21,7 @@ ul li{
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-align: center;
+    background: var(--card-bg);
 }
 /* 期限切れ */
 .expired-list{
@@ -29,7 +30,7 @@ ul li{
     border-radius: 10px;
 }
 .expired-list li{
-    color: black;
+    color: red;
     margin: 8px 0;
     cursor: pointer;
 }

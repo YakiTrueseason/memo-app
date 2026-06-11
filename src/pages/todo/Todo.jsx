@@ -6,6 +6,12 @@ import { ScheduleContext } from '../../conponents/ScheduleContext';
 
 function Todo() {
     const {selectedDate} = useContext(ScheduleContext);
+    //検索
+    const [searchText,setSearchText] = useState("");
+    //登録用タグ
+    const [selectedTag,setSelectedTag] = useState("勉強");
+    //絞り込み用タグ
+    const [filterTag,setFilterTag] = useState("すべて");
     //読み込み　起動
     const [todos, setTodos] = useState(()=>{
         const saved = localStorage.getItem("todos");
@@ -22,6 +28,7 @@ function Todo() {
                 id: uuidv4(),
                 date:selectedDate,
                 name: name,
+                tag:selectedTag,
                 completed: false 
             }];
         });
@@ -59,24 +66,74 @@ function Todo() {
             JSON.stringify(todos)
         );
     },[todos]);
-    
+    //全日付検索機能
+    const filteredTodos = todos.filter(todo => {
+        const matchesSearch =
+            todo.name
+                .toLowerCase()
+                .includes(searchText.toLowerCase()
+    );
+    const matchTag = 
+        filterTag === "すべて" ||
+        todo.tag === filterTag;
+    //検索中は全日付選択
+    if(searchText.trim() !== ""){
+        return(
+            matchesSearch &&
+            matchTag
+        );
+    }
+    // 選択日だけ表示
+    return(
+        todo.date === selectedDate &&
+        matchesSearch &&
+        matchTag
+    );
+});
+
     return (
         <div className="App">
             <h3>選択中の日付：{selectedDate}</h3>
             <h1>やるべきこと</h1><br />
+            <input type="text"
+                    placeholder='タスク検索'
+                    value={searchText}
+                    onChange={(e)=>
+                        setSearchText(e.target.value)
+                    }
+                />
             <input type='text' className='inputText' ref={todoNameRef} />
             <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
             <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
-            <TodoList todos={
-                todos.filter(
-                    (todo)=>
-                        todo.date === selectedDate
-                )
-                }
+    {/* タグ選択欄 */}
+            <select 
+                value={filterTag}
+                onChange={(e)=>setFilterTag(e.target.value)}
+                >
+                    <option value="すべて">すべて</option>
+                    <option value="勉強">勉強</option>
+                    <option value="仕事">仕事</option>
+                    <option value="買い物">買い物</option>
+                </select>
+            <select 
+                    value={selectedTag}
+                    onChange={(e)=>setSelectedTag(e.target.value)}
+            >
+                <option value="勉強">勉強</option>
+                <option value="仕事">仕事</option>
+                <option value="買い物">買い物</option>
+                <option value="その他">その他</option>
+            </select>
+    {/* 検索該当なし */}
+            {filteredTodos.length === 0 ?(
+                <p>該当するタスクはありません</p>
+            ) : (
+            <TodoList 
+                todos={filteredTodos}
                 toggleTodo={toggleTodo}
                 handleEditTodo={handleEditTodo}
             />
-            
+            )}
             <div>
                 残りのタスク:{todos.filter((todo) =>
                     todo.date === selectedDate &&
