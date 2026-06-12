@@ -37,6 +37,8 @@ return (
         <span className='legend-memo'>Memo</span>
         <span className='legend-both'>両方</span>
         <span className='legend-expired'>期限切れ</span>
+        <span className='legend-today'>今日</span>
+        <span className='legend-choice'>選択中</span>
         </div>
 
         <div className='calendar-container'> 

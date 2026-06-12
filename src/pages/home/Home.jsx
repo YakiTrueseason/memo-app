@@ -13,11 +13,24 @@ function Home() {
     const notes = JSON.parse(
         localStorage.getItem("notes")
     ) || [];
-    // 件数
+    // 今日の件数
     const todayTodos = todos.filter(todo => todo.date === selectedDate);
     const activeTodos = todayTodos.filter(todo => !todo.completed);
     const completedtodos = todayTodos.filter(todo => todo.completed);
     const todayNotes = notes.filter(note => note.date === selectedDate);
+    // タグ自動集計件数
+    const tagCounts = todos.reduce((acc,todo)=>{
+        acc[todo.tag]=(acc[todo.tag] || 0)+ 1;
+        return acc;
+    },[]);
+    //全体のtodo・未完了 件数
+    const totalTodos = todos.length;
+    // const completedCount = todos.filter(
+    //     todo => todo.completed
+    // ).length;
+    const activeCount = todos.filter(
+        todo => !todo.completed
+    ).length;
     // 今日の日付取得
     const today = new Date().toISOString().split("T")[0];
     // 期限切れtodo取得
@@ -38,14 +51,19 @@ function Home() {
             <h2>選択日：{selectedDate}</h2><br />
             
     {/*　サマリー表示　 */}
+    {/* 完了・未完了 */}
             <div className='dashboard-summary'>
                 <div className='card'>
-                    <h3>Todo</h3>
+                    <h3>今日のTodo</h3>
                     <p>{activeTodos.length}件</p>
                 </div>
                 <div className='card'>
                     <h3>完了</h3>
                     <p>{completedtodos.length}件</p>
+                </div>
+                <div className='card'>
+                    <h3>未完了</h3>
+                    <p>{activeCount}件</p>
                 </div>
                 <div className='card'>
                     <h3>メモ</h3>
@@ -55,7 +73,29 @@ function Home() {
                     <h3>期限切れ</h3>
                     <p>{expiredTodos.length}件</p>
                 </div>
+                <div className='card'>
+                    <h3>全体のtodo</h3>
+                    <p>{totalTodos}件</p>
+                </div>
+                {/* <div className='card'>
+                    <h3>完了</h3>
+                    <p>{completedCount}件</p>
+                </div> */}
             </div>
+    {/* タグ件数 */}
+        <h2>タグ集計</h2>
+        <div>
+            <div className='tag-summary'>
+                {Object.entries(tagCounts).map(
+                    ([tag,count]) => (
+                        <div key={tag} className='card'>
+                            <h3>{tag}</h3>
+                            <p>{count}件</p>
+                        </div>
+                    )
+                )}
+            </div>
+        </div>
     {/* 今日やることから選択された日付だけ残し画面表示 */}
                 <h2>今日のやること</h2>
             <ul>

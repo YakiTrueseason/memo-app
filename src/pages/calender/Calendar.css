@@ -1,33 +1,39 @@
 /* カレンダー全体 */
 .react-calendar{
-    width: 1000px;
-    max-width: 100%;
-    font-size: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    /* background: #fff; */
+    font-size: 35px;
     color: aqua;
     border: 1px solid black;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 /* タイル */
 .react-calendar__tile{
-    height: 80px;
+    height: 100px;
     color: aquamarine;
-    background-color: gray;
     /* マスの大きさ変更 */
     border-radius: 100px;
+    border: 1px solid #000;
+    border-radius: 0;
 }
-/* 日付 */
-.react-calendar__navigation button{
-    font-size: 30px;
-    color: blue;
+.react-calendar__tile:hover{
+    background: gold;
+    cursor: pointer;
 }
-/* クラス名 */
-.calendar-container{
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+
+.dark-mode .react-calendar__tile{
+    background: #000 !important; 
+    color: white !important;
 }
 /* 今日の日付 */
 .react-calendar__tile--now{
     background-color: blue;
+    color: white;
 }
 /* 選択中の日付 */
 .react-calendar__tile--active{
@@ -36,7 +42,45 @@
 }
 /* マウスを載せた場合 */
 .react-calendar__tile:hover{
-    background-color: green;
+    background-color: yellow;
+}
+/* ほかの月 */
+.react-calendar__month-view__days__day--neighboringMonth{
+    color: #000;
+    background: gray;
+}
+/* 土日曜日 */
+.react-calendar__month-view__days__day--weekend{
+    color: red;
+}
+/* ヘッダー*/
+.react-calendar__navigation{
+    margin-bottom: 10px;
+    height: 60px;
+}
+.react-calendar__navigation button{
+    font-size: 30px;
+    color: blue;
+    background: none;
+    border: none;
+}
+.react-calendar__navigation button:hover{
+    background: #73ffec;
+}
+/* 曜日 */
+.react-calendar__month-view__weekdays{
+    text-align: center;
+    font-weight: bold;
+    color: #117761;
+}
+.react-calendar__month-view__weekdays__weekday{
+    padding: 10px 0;
+}
+/* クラス名 */
+.calendar-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
 /* todoのある日付に色を付ける */
 .react-calendar__tile.has-todo{
@@ -63,11 +107,14 @@
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
+    justify-content: center;
 }
 .legend-todo,
 .legend-memo,
 .legend-both,
-.legend-expired{
+.legend-expired,
+.legend-today,
+.legend-choice{
     padding: 4px 12px;
     border-radius: 6px;
 }
@@ -86,6 +133,14 @@
 .legend-expired{
     background: red;
     color: black;
+}
+.legend-today{
+    background: blue;
+    color: white;
+}
+.legend-choice{
+    background: orange;
+    color: white;
 }
 /* カレンダーのマスに要素を追加 */
 .tile-info{

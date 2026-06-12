@@ -16,10 +16,17 @@ function Task({ todo, toggleTodo,handleEditTodo }) {
                 onChange={handleTodoClick} />
             </label>
     {/* やるべきこと */}
-            <span>
+            <span className={
+                todo.tag === "勉強" ? "tag-study"
+                : todo.tag === "仕事" ? "tag-work"
+                : todo.tag === "買い物" ? "tag-shopping"
+                : "tag-other"
+            }>
                 [{todo.tag}]
-                {todo.name}
-                ({todo.date})
+                <span>
+                    {todo.name}
+                    ({todo.date})
+                </span>
             </span>
     {/* 編集 */}
             <button onClick={()=>handleEditTodo(todo.id)}>編集</button>

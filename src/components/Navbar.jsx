@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { ThemeContext } from './ThemeContext';
+import './Navbar.css';
 
 function Navbar() {
     const {darkMode,setDarkMode} = useContext(ThemeContext);
     return (
-        <nav>
+        <nav className='nav'> 
             <button onClick={()=>
                 setDarkMode(!darkMode)
             }>

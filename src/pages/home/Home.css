@@ -23,6 +23,13 @@ ul li{
     text-align: center;
     background: var(--card-bg);
 }
+
+.tag-summary{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 /* 期限切れ */
 .expired-list{
     /* background: red; */

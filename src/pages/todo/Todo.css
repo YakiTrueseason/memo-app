@@ -15,9 +15,29 @@
   cursor: pointer;
   margin-left: 10px;
 }
-
+/* 期限切れ */
 .expired{
   color: red;
   font-weight: bold;
   margin-left: 10px;
+}
+/* タグの色変え */
+.tag-study{
+  color: blue;
+  font-weight: bold;
+}
+
+.tag-work{
+  color: red;
+  font-weight: bold;
+}
+
+.tag-shopping{
+  color: green;
+  font-weight: bold;
+}
+
+.tag-other{
+  color: gray;
+  font-weight: bold;
 }

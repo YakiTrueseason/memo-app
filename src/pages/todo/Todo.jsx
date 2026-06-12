@@ -12,6 +12,8 @@ function Todo() {
     const [selectedTag,setSelectedTag] = useState("勉強");
     //絞り込み用タグ
     const [filterTag,setFilterTag] = useState("すべて");
+    //完了・未完了
+    const [statusFilter,setStatusFilter] = useState("すべて");
     //読み込み　起動
     const [todos, setTodos] = useState(()=>{
         const saved = localStorage.getItem("todos");
@@ -73,21 +75,30 @@ function Todo() {
                 .toLowerCase()
                 .includes(searchText.toLowerCase()
     );
-    const matchTag = 
+    // タグ
+    const matchTag =
         filterTag === "すべて" ||
         todo.tag === filterTag;
+    // 完了・未完了
+    const matchStatus = 
+        statusFilter === "すべて" ||
+        (statusFilter === "未完了" &&
+            !todo.completed) ||
+        (statusFilter === "完了済み" &&
+            todo.completed);
     //検索中は全日付選択
     if(searchText.trim() !== ""){
         return(
             matchesSearch &&
-            matchTag
+            matchTag &&
+            matchStatus
         );
     }
     // 選択日だけ表示
     return(
         todo.date === selectedDate &&
-        matchesSearch &&
-        matchTag
+        matchTag &&
+        matchStatus
     );
 });
 
@@ -124,6 +135,15 @@ function Todo() {
                 <option value="買い物">買い物</option>
                 <option value="その他">その他</option>
             </select>
+    {/* セレクトボックス */}
+            <select value={statusFilter}
+                    onChange={(e)=>
+                        setStatusFilter(e.target.value)
+                    }>
+                        <option value="すべて">すべて</option>
+                        <option value="未完了">未完了</option>
+                        <option value="完了済み">完了済み</option>
+                    </select>
     {/* 検索該当なし */}
             {filteredTodos.length === 0 ?(
                 <p>該当するタスクはありません</p>
