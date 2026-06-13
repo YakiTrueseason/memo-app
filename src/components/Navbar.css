@@ -11,3 +11,14 @@
     background-color: aqua;
     color: white;
 }
+
+.dark .nav button{
+    background: #1e1e1e;
+    color: white;
+    border-radius: 1px solid #ddd;
+}
+
+.dark .nav button:hover{
+    background-color: aqua;
+    color: black;
+}

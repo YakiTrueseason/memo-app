@@ -19,6 +19,8 @@ function Todo() {
         const saved = localStorage.getItem("todos");
         return saved ? JSON.parse(saved) : [];
     });
+    //優先度
+    const [priority,setPriority] = useState("中");
     const todoNameRef = useRef();
     const handleAddTodo = () => {
     // タスク追加
@@ -31,6 +33,7 @@ function Todo() {
                 date:selectedDate,
                 name: name,
                 tag:selectedTag,
+                priority:priority,
                 completed: false 
             }];
         });
@@ -144,6 +147,14 @@ function Todo() {
                         <option value="未完了">未完了</option>
                         <option value="完了済み">完了済み</option>
                     </select>
+    {/* 優先度選択欄 */}
+            <select value={priority}
+                    onChange={(e)=>setPriority(e.target.value)}
+            >
+                <option value="高">高</option>
+                <option value="中">中</option>
+                <option value="低">低</option>
+            </select>
     {/* 検索該当なし */}
             {filteredTodos.length === 0 ?(
                 <p>該当するタスクはありません</p>

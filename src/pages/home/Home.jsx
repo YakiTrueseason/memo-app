@@ -25,12 +25,19 @@ function Home() {
     },[]);
     //全体のtodo・未完了 件数
     const totalTodos = todos.length;
-    // const completedCount = todos.filter(
-    //     todo => todo.completed
-    // ).length;
     const activeCount = todos.filter(
         todo => !todo.completed
     ).length;
+    // 優先度集計
+    const highPriorityCount = todos.filter(
+        todo => todo.priority === "高"
+    ).length
+    const mediumPriorityCount = todos.filter(
+        todo => todo.priority === "中"
+    ).length
+    const lowPriorityCount = todos.filter(
+        todo => todo.priority === "低"
+    ).length
     // 今日の日付取得
     const today = new Date().toISOString().split("T")[0];
     // 期限切れtodo取得
@@ -77,11 +84,23 @@ function Home() {
                     <h3>全体のtodo</h3>
                     <p>{totalTodos}件</p>
                 </div>
-                {/* <div className='card'>
-                    <h3>完了</h3>
-                    <p>{completedCount}件</p>
-                </div> */}
             </div>
+    {/* 優先度 */}
+        <h2>優先度別集計</h2>
+        <div className='priority-summary'>
+            <div className='card'>
+                <h3>高</h3>
+                <p>{highPriorityCount}件</p>
+            </div>
+            <div className='card'>
+                <h3>中</h3>
+                <p>{mediumPriorityCount}件</p>
+            </div>
+            <div className='card'>
+                <h3>低</h3>
+                <p>{lowPriorityCount}件</p>
+            </div>
+        </div>
     {/* タグ件数 */}
         <h2>タグ集計</h2>
         <div>

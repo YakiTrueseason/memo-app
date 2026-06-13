@@ -23,6 +23,10 @@ function Task({ todo, toggleTodo,handleEditTodo }) {
                 : "tag-other"
             }>
                 [{todo.tag}]
+    {/* 優先度 */}
+                {todo.priority === "高" && "🔴"}
+                {todo.priority === "中" && "🟡"}
+                {todo.priority === "低" && "🟢"}
                 <span>
                     {todo.name}
                     ({todo.date})

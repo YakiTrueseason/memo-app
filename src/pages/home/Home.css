@@ -30,6 +30,13 @@ ul li{
     justify-content: center;
     flex-wrap: wrap;
 }
+
+.priority-summary{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 /* 期限切れ */
 .expired-list{
     /* background: red; */
