@@ -28,16 +28,16 @@ function Home() {
     const activeCount = todos.filter(
         todo => !todo.completed
     ).length;
-    // 優先度集計
+    // 優先度集計(未完了)
     const highPriorityCount = todos.filter(
-        todo => todo.priority === "高"
-    ).length
+        todo => !todo.completed && todo.priority === "高"
+    ).length;
     const mediumPriorityCount = todos.filter(
-        todo => todo.priority === "中"
-    ).length
+        todo => !todo.completed && todo.priority === "中"
+    ).length;
     const lowPriorityCount = todos.filter(
-        todo => todo.priority === "低"
-    ).length
+        todo => !todo.completed && todo.priority === "低"
+    ).length;
     // 今日の日付取得
     const today = new Date().toISOString().split("T")[0];
     // 期限切れtodo取得

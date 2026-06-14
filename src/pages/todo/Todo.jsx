@@ -104,7 +104,29 @@ function Todo() {
         matchStatus
     );
 });
+    // 今日の日付
+    const today = new Date().toISOString().split("T")[0];
+    // 優先度順番
+    const priorityOrder = {
+        高:1,
+        中:2,
+        低:3
+    };
+    // ソート（順番に並べ替える）
+    const sortedTodos = [...filteredTodos].sort(
+        (a,b) => {
+            const aExpired = !a.completed && a.date < today;
+            const bExpired = !b.completed && b.date < today;
 
+            if(aExpired && !bExpired) return -1;
+            if(!aExpired && bExpired) return 1;
+
+            return(
+                priorityOrder[a.priority || "中"] -
+                priorityOrder[b.priority || "中"]
+            )
+        }
+    );
     return (
         <div className="App">
             <h3>選択中の日付：{selectedDate}</h3>
@@ -160,7 +182,7 @@ function Todo() {
                 <p>該当するタスクはありません</p>
             ) : (
             <TodoList 
-                todos={filteredTodos}
+                todos={sortedTodos}
                 toggleTodo={toggleTodo}
                 handleEditTodo={handleEditTodo}
             />
