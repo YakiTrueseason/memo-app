@@ -7,11 +7,6 @@ function Navbar() {
     const {darkMode,setDarkMode} = useContext(ThemeContext);
     return (
         <nav className='nav'> 
-            <button onClick={()=>
-                setDarkMode(!darkMode)
-            }>
-                {darkMode ? "Light" :"Dark"}
-            </button>
             <Link to="/">
                 <button>Home</button>
             </Link>
@@ -24,6 +19,11 @@ function Navbar() {
             <Link to="/calendar">
                 <button>Calendar</button>
             </Link>
+            <button onClick={()=>
+                setDarkMode(!darkMode)
+            }>
+                {darkMode ? "☀️　Light" :"🌙　Dark"}
+            </button>
         </nav>
     )
 }

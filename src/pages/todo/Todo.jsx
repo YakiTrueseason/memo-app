@@ -153,8 +153,8 @@ function Todo() {
     };
     return (
         <div className="App">
-            <h3>選択中の日付：{selectedDate}</h3>
-            <h1>やるべきこと</h1><br />
+            <h1>やるべきこと</h1>
+            <h3>選択日：{selectedDate}</h3><br />
             <div className='rest'>
                 残りのタスク:{todos.filter((todo) =>
                     todo.date === selectedDate &&
@@ -255,18 +255,22 @@ function Todo() {
                     }
                 /> <br />    
     {/* 検索該当なし */}
-            {filteredTodos.length === 0 ?(
-                <p>該当するタスクはありません</p>
-            ) : (
-            <TodoList 
-                todos={sortedTodos}
-                toggleTodo={toggleTodo}
-                handleEditTodo={handleEditTodo}
-                handleOpenModal={handleOpenModal}
-            />
-            )}
-            <button className='Button' onClick={handleOpenAddModal}>＋タスク追加</button>
-            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
+            <div className='todo-list-wrapper'>
+                {filteredTodos.length === 0 ?(
+                    <p>該当するタスクはありません</p>
+                ) : (
+                <TodoList
+                    todos={sortedTodos}
+                    toggleTodo={toggleTodo}
+                    handleEditTodo={handleEditTodo}
+                    handleOpenModal={handleOpenModal}
+                />
+                )}
+            </div>
+            <div className='todo-action'>
+                <button className='Button' onClick={handleOpenAddModal}>＋タスク追加</button>
+                <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
+            </div>
         </div>
     );
 }

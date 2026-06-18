@@ -20,6 +20,13 @@ code {
   min-height: 100vh;
   --card-bg:white;
 }
+.nav{
+  width: 180px;
+  flex-shrink: 0;
+  position: static;
+  top: 20px;
+  height: fit-content;
+}
 .content{
   flex: 1;
   padding: 20px;
@@ -31,4 +38,22 @@ code {
   background: #1e1e1e;
   color: white;
   --caed-bg:#333;
+}
+
+@media(max-width:768px){
+  .app{
+    flex-direction: column;
+  }
+  .nav{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .content{
+    padding: 10px;
+  }
 }

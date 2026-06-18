@@ -31,9 +31,9 @@ return (
     <>
         <h1>カレンダー</h1>        
 
-        <h2>選択日：{selectedDate}</h2><br />
-
-    {/* 凡例 */}
+        <div className='calendar-page'>
+            <h2>選択日：{selectedDate}</h2>
+            {/* 凡例 */}
         <button 
         className='legend-button'
         onClick={()=>setIsLegendOpen(true)}
@@ -58,8 +58,6 @@ return (
                 </div>
             </div>
         )}
-        <div className='calendar-page'>
-            
             <div className='calendar-container'> 
                 {/* 日付選択 */}
             <ReactCalendar
