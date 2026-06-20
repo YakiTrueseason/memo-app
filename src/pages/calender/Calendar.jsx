@@ -28,10 +28,8 @@ function Calendar() {
         navigate("/");
     }
 return (
-    <>
-        <h1>カレンダー</h1>        
-
         <div className='calendar-page'>
+            <h1>カレンダー</h1>        
             <h2>選択日：{selectedDate}</h2>
             {/* 凡例 */}
         <button 
@@ -131,7 +129,6 @@ return (
             />
         </div>
     </div>
-        </>
     );
 }
 

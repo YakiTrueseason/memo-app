@@ -61,8 +61,8 @@ function Memo() {
         <div className="app-container">
             {/* sidebar */}
             <div className='sidebar'>
-                <h3>選択中の日付： <br /> {selectedDate}</h3>
                 <h1>メモ</h1>
+                <h3>選択中の日付： <br /> {selectedDate}</h3>
                 <ul>
                     {notes
                     .filter(

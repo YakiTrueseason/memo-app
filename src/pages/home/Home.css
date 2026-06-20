@@ -6,51 +6,113 @@ h2{
 }
 ul li{
     text-align: center;
+    list-style: none;
+}
+/* モーダル */
+.card{
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.modal-dashboard{
+    width: 90%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #645959;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.dashboard-summary,
+.priority-summary,
+.tag-summary{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
 }
 
 .dashboard-summary{
-    display: grid;
-    /* justify-content: center; */
+    /* display: grid; */
     grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
     gap: 20px;
-    /* margin-bottom: 30px; */
+}
+/* モーダル */
+.dash-button{
+    color: black;
+    background-color: #f0f0f0;
+    border: 1px solid #cfcdcdef;
+    height: 60px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.dash-button:hover{
+    background-color: aqua;
+    color: white;
+}
+
+.dark .dash-button{
+    color: white;
+    background-color: #1e1e1e;
+    border: 1px solid white;
+}
+
+.dark .dash-button:hover{
+    background-color: aqua;
+    color: black;
+}
+
+.dash-button-wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
 }
 /* タスク一覧 */
 .card{
-    /* width: 150px; */
     padding: 20px;
     border-radius: 10px;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
-    /* text-align: center; */
-    /* background: var(--card-bg); */
     background: gray;
     color: white;
 }
 
-.tag-summary{
+.home-list{
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
 }
 
-.priority-summary{
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
+.item-card{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: var(--card-bg);
+    text-align: left;
 }
+
+.dark .item-card{
+    background: #1e1e1e;
+}
+
 /* 期限切れ */
 .expired-list{
-    /* background: red; */
     padding: 15px;
     border-radius: 10px;
 }
-.expired-list li{
+.expired-list {
     color: red;
     margin: 8px 0;
     cursor: pointer;
+    list-style: none;
+    transition: 0.5s;
 }
-.expired-list li:hover{
+
+.expired-item:hover{
     text-decoration: underline;
 }

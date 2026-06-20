@@ -1,4 +1,4 @@
-import  { useContext } from 'react'
+import  { useContext, useState } from 'react'
 import { ScheduleContext } from '../../conponents/ScheduleContext';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
@@ -52,14 +52,28 @@ function Home() {
         setSelectedDate(todo.date);
         navigate("/todo");
     };
+    // ダッシュボード　モーダル
+    const[isDashboardOpen,setIsDashboardOpen] = useState(false);
     return (
         <div>
             <h1>Home</h1><br />
             <h2>選択日：{selectedDate}</h2><br />
-            
+        {/* 統計 */}
+        <div className='dash-button-wrapper'>
+            <button
+                className='dash-button'
+                onClick={()=>setIsDashboardOpen(true)}
+            >
+                統計を見る
+            </button>
+        </div>
     {/*　サマリー表示　 */}
     {/* 完了・未完了 */}
-            <div className='dashboard-summary'>
+    {isDashboardOpen &&(
+        <div className='modal-overlay'>
+            <div className='modal-dashboard'>
+            <h2>統計</h2>
+                <div className='dashboard-summary'>
                 <div className='card'>
                     <h3>今日のTodo</h3>
                     <p>{activeTodos.length}件</p>
@@ -104,7 +118,7 @@ function Home() {
     {/* タグ件数 */}
         <h2>タグ集計</h2>
         <div>
-            <div className='tag-summary'>
+                <div className='tag-summary'>
                 {Object.entries(tagCounts).map(
                     ([tag,count]) => (
                         <div key={tag} className='card'>
@@ -113,39 +127,46 @@ function Home() {
                         </div>
                     )
                 )}
-            </div>
+                </div>
         </div>
+        <button onClick={()=>setIsDashboardOpen(false)}>
+                閉じる
+        </button>
+        </div>
+    </div>
+    )}
     {/* 今日やることから選択された日付だけ残し画面表示 */}
-                <h2>今日のやること</h2>
-            <ul>
-                {todos.filter(
-                    todo => todo.date === selectedDate &&
-                    !todo.completed
-                ).map(todo =>(
-                    <li key={todo.id}>
-                        {todo.name}
-                    </li>
-                ))}
-                <h2>今日のメモ</h2>
-                <ul>
-                    {notes.filter(
-                        note => note.date === selectedDate
-                    ).map(note =>(
-                        <li key={note.id}>
-                            {note.text}
-                        </li>
+            <h2>今日のやること</h2><br />
+                <div className='home-list'>
+                    {todos.filter(
+                        todo => todo.date === selectedDate &&
+                        !todo.completed
+                    ).map(todo =>(
+                        <div className='item-card' key={todo.id}>
+                            {todo.name}
+                        </div>
                     ))}
-                </ul>
-            </ul>
+                </div>
+                <h2>今日のメモ</h2><br />
+                    <div className='home-list'>
+                        {notes.filter(
+                            note => note.date === selectedDate
+                        ).map(note =>(
+                            <div className='item-card' key={note.id}>
+                                {note.text}
+                            </div>
+                        ))}
+                    </div>
             <h2>期限切れタスク</h2>
-            <div className='expired-list'>
-                <ul>
-                    {expiredTodos.map(todo =>(
-                        <li key={todo.id}
-                            onClick={()=>handleExpiredTodoClick(todo)}
-                        >🔥{todo.name}({todo.date})</li>
-                    ))}
-                </ul>
+            <div className='home-list'>
+                <div className='expired-list'>
+                        {expiredTodos.map(todo =>(
+                            <div className='item-card expired-item' key={todo.id}
+                                onClick={()=>handleExpiredTodoClick(todo)}
+                            >🔥{todo.name}({todo.date})
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     );

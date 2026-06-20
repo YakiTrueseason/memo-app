@@ -98,13 +98,30 @@ body {
   box-shadow: none;
   border: none;
 }
-
+/* 保存 */
 .main .save {
-  background-color: #4caf50;
-  color: white;
+  color: black;
+  background-color: #f0f0f0;
+  border: 1px solid #b6adad;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+}
+
+.main .save:hover{
+  background-color: aqua;
+  color: white;
+}
+
+.dark .main .save{
+  color: white;
+  background-color: #1e1e1e;
+  border: 1px solid white;
+}
+
+.dark .main .save:hover{
+  background-color: aqua;
+  color: black;
 }
 
 button:hover {
