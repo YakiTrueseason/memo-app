@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import './Todo.css';
 import TodoList from './TodoList';
-import { v4 as uuidv4 } from 'uuid';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
 // import { data } from 'react-router-dom';
 
@@ -14,42 +13,82 @@ function Todo() {
     //完了・未完了
     const [statusFilter,setStatusFilter] = useState("すべて");
     //読み込み　起動
-    const [todos, setTodos] = useState(()=>{
-        const saved = localStorage.getItem("todos");
-        return saved ? JSON.parse(saved) : [];
-    });
-    const toggleTodo = (id) => {
-        const newTodos = [...todos];
-        const todo = newTodos.find((todo) => todo.id === id);
-        todo.completed = !todo.completed;
-        setTodos(newTodos)
-    };
-    const handleClear = () => {
-        const newTodos = todos.filter((todo) => !todo.completed);
-        setTodos(newTodos);
-    };
-    // 編集
-    const handleEditTodo = (id) =>{
-        const targetTodo = todos.find(todo => todo.id === id);
-        const newName = prompt("新しいタスクを追加",targetTodo.name);
-        if(!newName)return;
-        const updatedTodos = todos.map(todo =>{
-            if(todo.id === id){
-                return{
-                ...todo,name:newName
-            };
-        }
-        return todo;
-        });
-        setTodos(updatedTodos);
-    };
-    //保存処理
+    const [todos, setTodos] = useState([]);
+
+    //Expressからtodoを取得し保存 
     useEffect(()=>{
-        localStorage.setItem(
-            "todos",
-            JSON.stringify(todos)
+        fetch("http://localhost:3001/todos")
+            .then((Response)=>Response.json())
+            .then((date)=>{
+                console.log(date);
+                setTodos(date);
+            })
+            .catch((error)=>{
+                console.error(error);
+            });
+    },[]);
+    // Todo追加
+    const addTodo = async(todo)=>{
+        await fetch("http://localhost:3001/todos",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(todo)
+        });
+        loadTodos();
+    };
+    
+    const loadTodos = async()=>{
+        const Response = await fetch("http://localhost:3001/todos");
+        const data = await Response.json();
+        setTodos(data);
+    };
+
+    useEffect(()=>{
+        loadTodos();
+    },[]);
+
+    //Todo編集
+    const updateTodo = async(todo)=>{
+        await fetch(`http://localhost:3001/todos/${todo.id}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(todo)
+        });
+        loadTodos();
+    }
+    // 切り替え
+    const toggleTodo = async(id) => {
+        const todo = todos.find(
+        todo=>todo.id === id
+    );
+    await updateTodo({
+        ...todo,
+        completed:!todo.completed
+    });
+    };
+
+    //Todo削除
+    const deleteTodo = async(id)=>{
+        await fetch(
+            `http://localhost:3001/todos/${id}`,
+            {
+                method:"DELETE"
+            }
         );
-    },[todos]);
+        loadTodos();
+    }
+
+    const handleClear = async() => {
+        const completedTodos = todos.filter(todo=>todo.completed);
+        for(const todo of completedTodos){
+            await deleteTodo(todo.id)
+        }
+    };
+
     //全日付検索機能
     const filteredTodos = todos.filter(todo => {
         const matchesSearch =
@@ -57,6 +96,7 @@ function Todo() {
                 .toLowerCase()
                 .includes(searchText.toLowerCase()
     );
+
     // タグ
     const matchTag =
         filterTag === "すべて" ||
@@ -131,23 +171,17 @@ function Todo() {
         setIsModalOpen(true);
     }
     // 保存、追加、編集
-    const handleModalSave = () =>{
+    const handleModalSave = async() =>{
         if(modalMode === "add"){
-            setTodos(prev=>[
-                ...prev,{
+                const newTodo= {
                     ...currentTodo,
-                    id:uuidv4(),
                     date:selectedDate,
                     completed:false
-                }
-            ]);
+                };
+
+            await addTodo(newTodo);
         }else{
-            const updatedTodos = todos.map(todo => 
-            todo.id === currentTodo.id
-                        ? currentTodo
-                        : todo
-        );
-        setTodos(updatedTodos);
+            await updateTodo(currentTodo);
         }
         setIsModalOpen(false);
     };
@@ -262,7 +296,6 @@ function Todo() {
                 <TodoList
                     todos={sortedTodos}
                     toggleTodo={toggleTodo}
-                    handleEditTodo={handleEditTodo}
                     handleOpenModal={handleOpenModal}
                 />
                 )}

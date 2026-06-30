@@ -48,6 +48,79 @@ app.get("/todos",(req,res)=>{
     });
 });
 
+// Todo追加
+app.post("/todos",(req,res)=>{
+    const{name,date,priority,tag}=req.body;
+    db.run(
+        `INSERT INTO todos(name,date,priority,tag,completed)
+        VALUES(?,?,?,?,0)`,
+        [name,date,priority,tag],
+        function(err){
+            if(err){
+                return res.status(500).json(err);
+            }
+            res.json({
+                id:this.lastID
+            });
+        }
+    );
+});
+
+//Todo編集
+app.put("/todos/:id",(req,res)=>{
+    const{
+        name,
+        date,
+        priority,
+        tag,
+        completed
+    }=req.body;
+
+    db.run(
+        `UPDATE todos
+        SET
+            name = ?,
+            date = ?,
+            priority = ?,
+            tag = ?,
+            completed = ?
+        WHERE id = ?
+            `,
+            [
+                name,
+                date,
+                priority,
+                tag,
+                completed,
+                req.params.id
+            ],
+            function(err){
+                if(err){
+                    return res.status(500).json(err);
+                }
+                res.json({
+                    succes:true
+                });
+            }
+    );
+});
+
+//削除
+app.delete("/todos/:id",(req,res)=>{
+    db.run(
+        "DELETE FROM todos WHERE id=?",
+        [req.params.id],
+        function(err){
+            if(err){
+                return res.status(500).json(err);
+            }
+            res.json({
+                success:true
+            });
+        }
+    );
+});
+
 //エラー確認
 db.all("PRAGMA table_info(todos)",[],(err,rows)=>{
     console.log(rows);
@@ -59,7 +132,7 @@ db.run(`
     VALUES(?,?,?,?,?)
     `,[
         "Reactの勉強",
-        "2026-6-29",
+        "2026-06-29",
         "高",
         "勉強",
         0

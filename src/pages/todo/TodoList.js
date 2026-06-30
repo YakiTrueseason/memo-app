@@ -7,7 +7,6 @@ const TodoList = ({ todos, toggleTodo,handleEditTodo,handleOpenModal }) => {
     todo={todo} 
     key={todo.id} 
     toggleTodo={toggleTodo}
-    handleEditTodo={handleEditTodo}
     handleOpenModal={handleOpenModal}
     />);
     

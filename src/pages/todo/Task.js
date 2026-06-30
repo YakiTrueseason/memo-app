@@ -1,13 +1,12 @@
 import React from 'react'
 import './Todo.css';
 
-function Task({ todo, toggleTodo,handleEditTodo,handleOpenModal }) {
+function Task({ todo, toggleTodo,handleOpenModal }) {
     const handleTodoClick = () => {
         toggleTodo(todo.id);
     }
     // 今日の日付取得
     const today = new Date().toISOString().split("T")[0];
-    
     return (
         <div className='todo-item'>
             <label>
