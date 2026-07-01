@@ -22,6 +22,25 @@ export function ScheduleProvider({children}){
 
     const[todos,setTodos] = useState([]);
 
+    const[notes,setNotes]= useState([]);
+
+    const loadTodos = async()=>{
+        const Response = await fetch("http://localhost:3001/todos");
+        const data = await Response.json();
+        setTodos(data);
+    };
+
+    const loadNotes = async()=>{
+        const response = await fetch("http://localhost:3001/notes");
+        const data = await response.json();
+        setNotes(data);
+    }
+
+    useEffect(()=>{
+        loadTodos();
+        loadNotes();
+    },[]);
+
     useEffect(()=>{
         localStorage.setItem(
             "selectedDate",
@@ -33,8 +52,16 @@ return (
         value={{
             selectedDate,
             setSelectedDate,
+
             todos,
             setTodos,
+
+            notes,
+            setNotes,
+
+            loadTodos,
+            loadNotes,
+            
             schedules,
             setSchedules,
         }}

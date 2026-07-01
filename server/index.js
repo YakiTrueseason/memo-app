@@ -21,7 +21,7 @@ const db = new sqlite3.Database("./todo.db",(err)=>{
     }
 });
 
-//sqlite 設計図
+//sqlite　Todo　テーブル 設計図
 db.run(`
     CREATE TABLE IF NOT EXISTS todos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,6 +42,7 @@ app.get("/",(req,res)=>{
 app.get("/todos",(req,res)=>{
     db.all("SELECT * FROM todos",[],(err,rows)=>{
         if(err){
+            console.error(err);
             return res.status(500).json(err);
         }
         res.json(rows);
@@ -137,6 +138,97 @@ db.run(`
         "勉強",
         0
     ]);
+
+//メモ　テーブル追加
+db.run(`
+    CREATE TABLE IF NOT EXISTS notes(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    text TEXT NOT NULL,
+    date TEXT NOT NULL
+    )
+    `);
+
+//メモ取得
+app.get("/notes",(req,res)=>{
+    db.all(
+        "SELECT * FROM notes",
+        [],
+        (err,rows)=>{
+            if(err){
+                return res.status(500).json(err);
+            }
+            res.json(rows);
+        }
+    )
+})
+
+//メモ追加
+app.post("/notes",(req,res)=>{
+    const{
+        text,
+        date
+    }=req.body;
+    db.run(
+        `
+        INSERT INTO notes(text,date)VALUES(?,?)`,
+        [
+            text,date
+        ],
+        function(err){
+            if(err){
+            return res.status(500).json(err);
+        }
+        res.json({
+            id:this.lastID
+        });
+    }
+        )
+})
+
+// メモ編集
+app.put("/notes/:id",(req,res)=>{
+    const{
+        text,date
+    }=req.body;
+    db.run(
+        `
+        UPDATE notes
+        SET
+            text=?,
+            date=?
+        WHERE id=?
+        `,
+        [
+            text,
+            date,
+            req.params.id
+        ],
+        function(err){
+            if(err){
+                return res.status(500).json(err);
+            }
+            res.json({
+                success:true
+            });
+        }
+    );
+});
+
+// メモ削除
+app.delete("/notes/:id",(req,res)=>{
+    db.run(
+        "DELETE FROM notes WHERE id=?",
+        [req.params.id],
+        function(err){
+            if(err){
+                return res.status(500).json(err);
+            }
+            res.json({
+                success:true
+            });
+        }
+    );
+});
 
 //サーバー起動
 app.listen(3001,()=>{

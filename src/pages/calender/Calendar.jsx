@@ -6,11 +6,12 @@ import ReactCalendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
 
 function Calendar() {
-    const{selectedDate,setSelectedDate} = useContext(ScheduleContext);
-    // やること
-    const todos = JSON.parse(localStorage.getItem("todos"))||[];
-    // メモ
-    const notes = JSON.parse(localStorage.getItem("notes"))||[];
+    const{
+        selectedDate,
+        setSelectedDate,
+        todos,
+        notes
+    } = useContext(ScheduleContext);
     // 今日の日付取得
     const today = new Date().toISOString().split("T")[0];
     // 移動

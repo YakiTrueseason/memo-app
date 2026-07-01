@@ -2,31 +2,22 @@ import { useContext, useEffect, useState } from 'react';
 import './Todo.css';
 import TodoList from './TodoList';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
-// import { data } from 'react-router-dom';
 
 function Todo() {
-    const {selectedDate} = useContext(ScheduleContext);
+
+    const{
+        todos,
+        loadTodos,
+        selectedDate
+    }=useContext(ScheduleContext);
+
     //検索
     const [searchText,setSearchText] = useState("");
     //絞り込み用タグ
     const [filterTag,setFilterTag] = useState("すべて");
     //完了・未完了
     const [statusFilter,setStatusFilter] = useState("すべて");
-    //読み込み　起動
-    const [todos, setTodos] = useState([]);
 
-    //Expressからtodoを取得し保存 
-    useEffect(()=>{
-        fetch("http://localhost:3001/todos")
-            .then((Response)=>Response.json())
-            .then((date)=>{
-                console.log(date);
-                setTodos(date);
-            })
-            .catch((error)=>{
-                console.error(error);
-            });
-    },[]);
     // Todo追加
     const addTodo = async(todo)=>{
         await fetch("http://localhost:3001/todos",{
@@ -39,15 +30,9 @@ function Todo() {
         loadTodos();
     };
     
-    const loadTodos = async()=>{
-        const Response = await fetch("http://localhost:3001/todos");
-        const data = await Response.json();
-        setTodos(data);
-    };
-
     useEffect(()=>{
         loadTodos();
-    },[]);
+    });
 
     //Todo編集
     const updateTodo = async(todo)=>{

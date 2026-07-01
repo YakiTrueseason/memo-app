@@ -4,59 +4,87 @@ import { ScheduleContext } from '../../conponents/ScheduleContext';
 
 function Memo() {
     //読み込み　起動
-    const [notes, setNotes] = useState(()=>{
-        const saved = localStorage.getItem("notes");
-        return saved ? JSON.parse(saved) : [];
-    });
+
+    const{
+        notes,
+        loadNotes,
+        selectedDate
+    }=useContext(ScheduleContext);
+
     const [selectedNote, setSelectedNote] = useState(null);
     const [editedText, setEditedText] = useState("");
-    const { selectedDate } = useContext(ScheduleContext);
 
-    const handleNoteAdd = () => {
+    //メモ取得
+    const addNote = async(note)=>{
+        await fetch("http://localhost:3001/notes",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(note)
+            }
+        );
+        loadNotes();
+    }
+
+    //メモ編集
+    const updateNote = async(note)=>{
+        await fetch(`http://localhost:3001/notes/${note.id}`,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(note)
+            }
+        );
+        loadNotes();
+    }
+
+    //メモ削除
+    const deleteNote = async(id)=>{
+        await fetch(`http://localhost:3001/notes/${id}`,
+            {
+                method:"DELETE",
+            }
+        );
+        loadNotes();
+    }
+
+    // 初回読み込み
+    useEffect(()=>{
+    loadNotes();
+    })
+
+    const handleNoteAdd = async() => {
         // 新しいオブジェクトの追加
         const newNote = {
-            id: Date.now(),
             date:selectedDate,
             // 下の画像はメモと入力してから変換
             text: "新規ノート📝"
         };
-        setNotes([...notes, newNote]);
-        setSelectedNote(newNote);
-        setEditedText(newNote.text);
+        await addNote(newNote);
     };
     const handleSelect = (note) => {
         setSelectedNote(note);
         setEditedText(note.text);
     }
-    const handleDelete = (noteId) => {
-        const filterNote = notes.filter((note) => note.id !== noteId);
-        setNotes(filterNote);
-
-        if (filterNote.length > 0) {
-            const lastNote = filterNote[filterNote.length - 1];
-            setSelectedNote(lastNote);
-        } else {
-            setSelectedNote(null);
-        }
+    const handleDelete = async(noteId) => {
+        await deleteNote(noteId);
+        await loadNotes();
     }
+    
     const handleChange = (e) => {
         setEditedText(e.target.value);
     }
-    const handleSave = () => {
-        const updatedNotes = notes.map((note) => {
-            if (note.id === selectedNote.id) {
-                return { ...note, text: editedText }
-            }
-            return note;
+    const handleSave = async() => {
+        await updateNote({
+            ...selectedNote,
+            text:editedText
         });
-        setNotes(updatedNotes);
+        await loadNotes();
     }
-    //保存
-    useEffect(()=>{
-        localStorage.setItem(
-            "notes",JSON.stringify(notes)
-        );
-    },[notes]);
     return (
         <div className="app-container">
             {/* sidebar */}

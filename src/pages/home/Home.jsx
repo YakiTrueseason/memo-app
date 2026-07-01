@@ -4,15 +4,14 @@ import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
-    const{selectedDate,setSelectedDate}= useContext(ScheduleContext);
-    //todo 今日のやること
-    const todos = JSON.parse(
-        localStorage.getItem("todos")
-    ) || [];
-    //note
-    const notes = JSON.parse(
-        localStorage.getItem("notes")
-    ) || [];
+
+    const{
+        todos,
+        notes,
+        selectedDate,
+        setSelectedDate
+    }= useContext(ScheduleContext);
+
     // 今日の件数
     const todayTodos = todos.filter(todo => todo.date === selectedDate);
     const activeTodos = todayTodos.filter(todo => !todo.completed);
@@ -39,7 +38,7 @@ function Home() {
         todo => !todo.completed && todo.priority === "低"
     ).length;
     // 今日の日付取得
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toLocaleDateString("sv-SE");
     // 期限切れtodo取得
     const expiredTodos = todos.filter(
         todo => !todo.completed &&

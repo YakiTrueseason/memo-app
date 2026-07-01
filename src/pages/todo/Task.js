@@ -6,7 +6,8 @@ function Task({ todo, toggleTodo,handleOpenModal }) {
         toggleTodo(todo.id);
     }
     // 今日の日付取得
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toLocaleDateString("sv-SE");
+
     return (
         <div className='todo-item'>
             <label>
@@ -41,8 +42,8 @@ function Task({ todo, toggleTodo,handleOpenModal }) {
                 編集
             </button> 
     {/* 期限切れ */}
-                {todo.date < today &&
-                !todo.completed &&(
+                {new Date(todo.date) <new Date (today) &&
+                Number(todo.completed) === 0 &&(
                     <span className='expired'>期限切れ</span>
                 )}
         </div>
