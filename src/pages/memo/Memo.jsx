@@ -16,7 +16,7 @@ function Memo() {
 
     //メモ取得
     const addNote = async(note)=>{
-        await fetch("http://localhost:3001/notes",
+        await fetch("https://todo-memo-api.onrender.com/notes",
             {
                 method:"POST",
                 headers:{
@@ -30,7 +30,7 @@ function Memo() {
 
     //メモ編集
     const updateNote = async(note)=>{
-        await fetch(`http://localhost:3001/notes/${note.id}`,
+        await fetch(`https://todo-memo-api.onrender.com/notes/${note.id}`,
             {
                 method:"PUT",
                 headers:{
@@ -44,7 +44,7 @@ function Memo() {
 
     //メモ削除
     const deleteNote = async(id)=>{
-        await fetch(`http://localhost:3001/notes/${id}`,
+        await fetch(`https://todo-memo-api.onrender.com/notes/${id}`,
             {
                 method:"DELETE",
             }

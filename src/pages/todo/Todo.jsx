@@ -20,7 +20,7 @@ function Todo() {
 
     // Todo追加
     const addTodo = async(todo)=>{
-        await fetch("http://localhost:3001/todos",{
+        await fetch("https://todo-memo-api.onrender.com/todos",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -36,7 +36,7 @@ function Todo() {
 
     //Todo編集
     const updateTodo = async(todo)=>{
-        await fetch(`http://localhost:3001/todos/${todo.id}`,{
+        await fetch(`https://todo-memo-api.onrender.com/todos/${todo.id}`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json"
@@ -59,7 +59,7 @@ function Todo() {
     //Todo削除
     const deleteTodo = async(id)=>{
         await fetch(
-            `http://localhost:3001/todos/${id}`,
+            `https://todo-memo-api.onrender.com/todos/${id}`,
             {
                 method:"DELETE"
             }

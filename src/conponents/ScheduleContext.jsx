@@ -25,13 +25,13 @@ export function ScheduleProvider({children}){
     const[notes,setNotes]= useState([]);
 
     const loadTodos = async()=>{
-        const Response = await fetch("http://localhost:3001/todos");
+        const Response = await fetch("https://todo-memo-api.onrender.com/todos");
         const data = await Response.json();
         setTodos(data);
     };
 
     const loadNotes = async()=>{
-        const response = await fetch("http://localhost:3001/notes");
+        const response = await fetch("https://todo-memo-api.onrender.com/notes");
         const data = await response.json();
         setNotes(data);
     }
